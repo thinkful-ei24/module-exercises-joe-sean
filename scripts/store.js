@@ -9,7 +9,7 @@ const store = (function() {
 	let searchTerm= '';
     
 	const findByID = function(id) {
-		items.find(function(item) {
+		return items.find(function(item) {
 			return item.id === id;
 		});
 	};
@@ -24,21 +24,25 @@ const store = (function() {
 		}
 	};
 
-	const findAndToggleChecked = function(id, newName) {
-		try {
-			Item.validateName(newName);
-			const itemToCheck = findByID(id);
-			itemToCheck.name = newName;
-		} catch(e) {
-			console.error(`Cannot update name, ${e.message}`);
-		}
+	const findAndToggleChecked = function(id) {
+		const itemToCheck = this.findByID(id);
+		itemToCheck.checked = !itemToCheck.checked;
 	};
 
+	const findAndUpdateName = function(id, newName) {
+		try {
+			Item.validateName(newName);
+			const itemToUpdate = findByID(id);
+			itemToUpdate.name = newName;
+		} catch(e) {
+			console.error(`Cannot update name: ${e.message}`);
+		}
+	}
+
 	const findAndDelete = function(id) {
-		this.items = this.items.filter(function(item) {
+		this.items = items.filter(function(item) {
 			return item.id !== id;
 		});
-		console.log(items);
 	};
 
 	return {
@@ -48,6 +52,7 @@ const store = (function() {
 		findByID: findByID,
 		addItem: addItem,
 		findAndToggleChecked: findAndToggleChecked,
+		findAndUpdateName: findAndUpdateName,
 		findAndDelete: findAndDelete,
 	};
 }());
