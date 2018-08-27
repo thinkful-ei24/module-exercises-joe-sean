@@ -45,6 +45,14 @@ const store = (function() {
 		});
 	};
 
+	const toggleCheckedFilter = function() {
+		this.hideCheckedItems = !this.hideCheckedItems;
+	}
+
+	const setSearchTerm = function(searchTerm) {
+		this.searchTerm = searchTerm;
+	}
+
 	return {
 		items: items,
 		hideCheckedItems: hideCheckedItems,
@@ -54,5 +62,7 @@ const store = (function() {
 		findAndToggleChecked: findAndToggleChecked,
 		findAndUpdateName: findAndUpdateName,
 		findAndDelete: findAndDelete,
+		toggleCheckedFilter,
+		setSearchTerm
 	};
 }());
